@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6f0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+    }
+
+    .container {
+      background: #fffafc;
+      border-radius: 12px;
+      padding: 20px;
+      width: 400px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #6b5b95;
+    }
+
+    .task-input {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .task-input input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #c5cbe3;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .task-input button {
+      margin-left: 10px;
+      padding: 10px 15px;
+      background-color: #a2d2ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .task-input button:hover {
+      background-color: #89c2d9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #fce1e4;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      background: #d8f3dc;
+      color: #555;
+    }
+
+    .buttons button {
+      margin-left: 5px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .update-btn {
+      background-color: #ffd6a5;
+    }
+
+    .delete-btn {
+      background-color: #ffadad;
+    }
+
+    .complete-btn {
+      background-color: #caffbf;
+    }
+
+    .buttons button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌸 Task Manager</h1>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a new task...">
+      <button onclick="addTask()">Add</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("taskInput");
+      const taskText = taskInput.value.trim();
+      if (taskText === "") return;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <span>${taskText}</span>
+        <div class="buttons">
+          <button class="complete-btn" onclick="toggleComplete(this)">✔</button>
+          <button class="update-btn" onclick="updateTask(this)">✎</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑</button>
+        </div>
+      `;
+      document.getElementById("taskList").appendChild(li);
+      taskInput.value = "";
+    }
+
+    function toggleComplete(button) {
+      const li = button.parentElement.parentElement;
+      li.classList.toggle("completed");
+    }
+
+    function updateTask(button) {
+      const li = button.parentElement.parentElement;
+      const span = li.querySelector("span");
+      const newTask = prompt("Update your task:", span.textContent);
+      if (newTask !== null && newTask.trim() !== "") {
+        span.textContent = newTask.trim();
+      }
+    }
+
+    function deleteTask(button) {
+      const li = button.parentElement.parentElement;
+      li.remove();
+    }
+  </script>
+</body>
+</html>
+
